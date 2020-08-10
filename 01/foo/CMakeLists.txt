@@ -2,15 +2,6 @@ cmake_minimum_required(VERSION 3.12)
 
 project(foo)
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
-endif()
-
-message(STATUS: "Buildtype: ${CMAKE_BUILD_TYPE}")
-
-message(STATUS "C++ flags, Debug configuration: ${CMAKE_CXX_FLAGS_DEBUG}")
-message(STATUS "C++ flags, Release configuration: ${CMAKE_CXX_FLAGS_RELEASE}")
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -18,12 +9,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set_property(DIRECTORY PROPERTY EP_BASE ${CMAKE_BINARY_DIR}/subprojects)
 
 set(STAGED_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/stage)
-message(STATUS "${PROJECT_NAME} staged install: ${STAGED_INSTALL_PREFIX}")
 
-# List repeated in external/upstream because of strange bug
 list(APPEND BOOST_COMPONENTS_REQUIRED unit_test_framework)
 set(Boost_MINIMUM_REQUIRED 1.72)
-
 add_subdirectory(external/upstream)
 
 include(CTest)
@@ -45,8 +33,6 @@ ExternalProject_Add(
     -DCMAKE_CXX_FLAGS:STRING=${CMAKE_CXX_FLAGS}
     -DCMAKE_INCLUDE_PATH:PATH=${BOOST_INCLUDEDIR}
     -DCMAKE_LIBRARY_PATH:PATH=${BOOST_LIBRARYDIR}
-    -DCMAKE_INCLUDE_PATH:PATH=${GDAL_INCLUDE_DIR}
-    -DCMAKE_LIBRARY_PATH:PATH=${GDAL_LIBRARY}
   BUILD_ALWAYS
     1
   INSTALL_COMMAND

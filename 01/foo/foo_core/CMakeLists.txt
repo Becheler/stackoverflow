@@ -15,15 +15,6 @@ add_library(${PROJECT_NAME}::${PROJECT_NAME} ALIAS ${PROJECT_NAME})
 # Include Boost as an imported target
 find_package(Boost 1.72 REQUIRED COMPONENTS unit_test_framework)
 
-# Adding the install interface generator expression makes sure that the include
-# files are installed to the proper location (provided by GNUInstallDirs)
-target_include_directories(${PROJECT_NAME}
-  INTERFACE $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-
-# If we have compiler requirements for this library, list them here
-target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_17)
-
 if(BUILD_TESTING)
   add_subdirectory(test)
 endif()

@@ -1,7 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 
-### UNIT TEST
-
 # Keep test files in a separate source directory called test
 file(GLOB TEST_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} unit_test/*.cpp)
 
@@ -14,9 +12,7 @@ foreach(testSrc ${TEST_SRCS})
         add_executable(${testName} ${testSrc})
 
         #link to Boost libraries AND your targets and dependencies
-        target_link_libraries(${testName}
-                                Boost::unit_test_framework
-                                )
+        target_link_libraries(${testName} Boost::unit_test_framework )
 
         #I like to move testing binaries into a testBin directory
          set_target_properties(${testName} PROPERTIES
@@ -26,9 +22,8 @@ foreach(testSrc ${TEST_SRCS})
           ${testName} PRIVATE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
                                   $<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>)
 
-        #Finally add it to test execution -
-        #Notice the WORKING_DIRECTORY and COMMAND
+        #Finally add it to test execution - Notice the WORKING_DIRECTORY and COMMAND
         add_test(NAME ${testName}
                  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test/testBin
-               COMMAND ${CMAKE_BINARY_DIR}/test/testBin/${testName} )
+                 COMMAND ${CMAKE_BINARY_DIR}/test/testBin/${testName} )
 endforeach(testSrc)
