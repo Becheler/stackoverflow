@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 # Include Boost as an imported target
-FIND_BOOST(Boost 1.56 REQUIRED CONFIG COMPONENTS unit_test_framework)
+find_package(Boost REQUIRED CONFIG COMPONENTS unit_test_framework)
 
 # Keep test files in a separate source directory called test
 file(GLOB TEST_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} unit_test/*.cpp)
